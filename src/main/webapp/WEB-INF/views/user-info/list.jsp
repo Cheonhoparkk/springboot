@@ -8,6 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+<form action="/user-infos">
+<input type="text" name="uiName" placeholder="이름">
+<input type="text" name="uiId" placeholder="아이디">
+<input type="text" name="uiAddr" placeholder="주소">
+<button>조회</button>
+</form>
 <table border="1">
 	<tr>
 		<th>번호</th>

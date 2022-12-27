@@ -14,8 +14,8 @@ public class UserInfoService {
 	@Autowired
 	private UserInfoMapper userInfoMapper;
 	
-	public List<UserInfoVO> getUserInfos(){
-		return userInfoMapper.selectUserInfoList();
+	public List<UserInfoVO> getUserInfos(UserInfoVO userInfo){
+		return userInfoMapper.selectUserInfoList(userInfo);
 		
 	}
 }
