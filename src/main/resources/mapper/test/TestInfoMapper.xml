@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.demo.mapper.TestInfoMapper">
+	<select id="selectTestInfoList" resultType="com.ezen.demo.vo.TestInfoVO">
+	SELECT TI_NUM, TI_NAME, TI_AGE, TI_ADDRESS FROM TEST_INFO
+	<where>
+		<if test='tiName != null and tiName !=""'>
+		AND TI_NAME LIKE CONCAT('%',${tiName},'%')
+		</if>
+	</where>
+	</select>
+	<select id="selectTestInfo" resultType="com.ezen.demo.vo.TestInfoVO">
+	SELECT TI_NUM, TI_NAME, TI_AGE, TI_ADDRESS FROM TEST_INFO
+	WHERE TI_NAME=#{tiName}
+		<if test='tiName != null and tiName !=""'>
+		AND TI_NAME LIKE CONCAT('%',${tiName},'%')
+		</if>
+	</select>
+	<insert id="insertTestInfo" parameterType="com.ezen.demo.vo.TestInfoVO">
+	INSERT INTO TEST_INFO(
+	TI_NUM, 
+	TI_NAME, 
+	TI_AGE, 
+	TI_ADDRESS)
+	VALUES(
+	${tiNum},
+	${tiName},
+	${tiAge},
+	${tiAddress})
+	</insert>
+	<update id="updateTestInfo" parameterType="com.ezen.demo.vo.TestInfoVO">
+	UPDATE TEST_INFO
+		SET TI_NAME=${tiName},
+		TI_AGE=${tiAge},
+		TI_ADDRESS=${tiAddress}
+		WHERE TI_NUM=${tiNum}
+	</update>
+	<delete id="deleteTestInfo">
+		DELETE FROM TEST_INFO WHERE TI_NUM=${tiNum}
+	</delete>
+</mapper>
