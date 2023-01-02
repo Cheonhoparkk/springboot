@@ -9,16 +9,16 @@ import com.ezen.demo.mapper.BoardInfoMapper;
 import com.ezen.demo.vo.BoardInfoVO;
 
 @Service
-public class BoardInfoService {
-	
+public class BoardInfoService{
+
 	@Autowired
 	private BoardInfoMapper boardInfoMapper;
-	
+
 	public List<BoardInfoVO> getBoardInfos(BoardInfoVO boardInfo){
 		return boardInfoMapper.selectBoardInfoList(boardInfo);
-		
 	}
 	public BoardInfoVO getBoardInfo(BoardInfoVO boardInfo) {
+		boardInfoMapper.updateBoardInfoCnt(boardInfo.getBiNum());
 		return boardInfoMapper.selectBoardInfo(boardInfo);
 	}
 	public int insertBoardInfo(BoardInfoVO boardInfo) {
@@ -30,5 +30,4 @@ public class BoardInfoService {
 	public int deleteBoardInfo(int biNum) {
 		return boardInfoMapper.deleteBoardInfo(biNum);
 	}
-
 }

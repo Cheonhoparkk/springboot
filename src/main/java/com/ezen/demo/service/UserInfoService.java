@@ -10,12 +10,10 @@ import com.ezen.demo.vo.UserInfoVO;
 
 @Service
 public class UserInfoService {
-
 	@Autowired
 	private UserInfoMapper userInfoMapper;
 	
 	public List<UserInfoVO> getUserInfos(UserInfoVO userInfo){
 		return userInfoMapper.selectUserInfoList(userInfo);
-		
 	}
 }

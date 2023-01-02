@@ -22,9 +22,8 @@ public class BankController {
 		bankList.add("신한");
 		bankList.add("국민");
 		bankList.add("신협");
-		bankList.add("수협");
+		bankList.add("수협1");
 		model.addAttribute("bankList",bankList);
 		return "views/bank/list";
 	}
-	
 }

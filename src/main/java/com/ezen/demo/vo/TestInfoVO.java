@@ -8,5 +8,5 @@ public class TestInfoVO {
 	private int tiNum;
 	private String tiName;
 	private int tiAge;
-	private String tiAddress;
+	private String tiAddr;
 }

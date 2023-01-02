@@ -1,7 +1,5 @@
 package com.ezen.demo.controller;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,16 +14,19 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class UserInfoController {
-	
+/*
+ * Controller, RestController
+ * Configuration
+ * Service, Repository, Component
+ * Bean
+ */
 	@Autowired
 	private UserInfoService userInfoService;
 	
-	@GetMapping("/user-infos") 
-	public String getUserInfos(Model model, @ModelAttribute UserInfoVO userInfo){
-		log.info("userInfo=>{}",userInfo);
+	@GetMapping("/user-infos")
+	public String getUserInfos(Model model,@ModelAttribute UserInfoVO userInfo){
 		model.addAttribute("userList", userInfoService.getUserInfos(userInfo));
 		return "views/user-info/list";
-	
-	
 	}
+	
 }

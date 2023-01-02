@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,14 +21,14 @@
 		<th>아이디</th>
 		<th>주소</th>
 	</tr>
-<c:forEach items="${userList}" var = "user">
+	<c:forEach items="${userList}" var="user">
 	<tr>
 		<td>${user.uiNum}</td>
 		<td>${user.uiName}</td>
 		<td>${user.uiId}</td>
 		<td>${user.uiAddr}</td>
 	</tr>
-</c:forEach>
+	</c:forEach>
 </table>
 </body>
 </html>

@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<input type="text" id="tiname" placeholder="이름"><button onclick="getTestInfos()">검색</button>
 <table border="1">
 	<tr>
 		<th>번호</th>
@@ -15,24 +14,22 @@
 		<th>나이</th>
 		<th>주소</th>
 	</tr>
-	<tbody id="tBody">
-	</tbody>
+	<tbody id="tBody"></tbody>
 </table>
 <script>
 function getTestInfos(){
-	fetch('/test-infos?tiName=' + document.querySelector('#tiName').value)
+	fetch('/test-infos')
 	.then(function(res){
 		return res.json();
 	})
 	.then(function(list){
 		let html = ''
-		for(let i=0;i<data.length;i++{
-			const testInfo = list[i];
+		for(const ti of list){
 			html += '<tr>';
-			html += '<td>' + testInfo.tiNum + '</td>';
-			html += '<td>' + testInfo.tiName + '</td>';
-			html += '<td>' + testInfo.tiAge + '</td>';
-			html += '<td>' + testInfo.tiAddress + '</td>';
+			html += '<td>' + ti.tiNum + '</td>';
+			html += '<td>' + ti.tiName + '</td>';
+			html += '<td>' + ti.tiAge + '</td>';
+			html += '<td>' + ti.tiAddr + '</td>';
 			html += '</tr>';
 		}
 		document.querySelector('#tBody').innerHTML = html;

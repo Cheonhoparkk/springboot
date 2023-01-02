@@ -8,16 +8,15 @@ import org.springframework.stereotype.Service;
 import com.ezen.demo.mapper.ShopInfoMapper;
 import com.ezen.demo.vo.ShopInfoVO;
 
+
 @Service
-public class ShopInfoService {
-	
+public class ShopInfoService{
 	@Autowired
 	private ShopInfoMapper shopInfoMapper;
-
-	public List<ShopInfoVO> getShopInfos(ShopInfoVO shopInfo){
-		return shopInfoMapper.selectShopInfoList(shopInfo);
+	
+	public List<ShopInfoVO> getShopInfos(ShopInfoVO userInfo){
+		return shopInfoMapper.selectShopInfoList(userInfo);
 	}
-
 	public ShopInfoVO getShopInfo(ShopInfoVO shopInfo) {
 		return shopInfoMapper.selectShopInfo(shopInfo);
 	}
