@@ -40,9 +40,10 @@ public class StudentPointController {
 		return studentPointService.updateStudentPoint(studentPoint);
 	}
 	
-	@DeleteMapping("/student-points/{spNum}")
+	
+	@DeleteMapping("/student-points2")
 	@ResponseBody
-	public int deleteStudentPoint(@PathVariable("spNum") int spNum) {
-		return studentPointService.deleteStudentPoint(spNum);
+	public int deleteStudentPoint(@RequestBody StudentPointVO studentPoint) {
+		return studentPointService.deleteStudentPoint(studentPoint.getSpNums());
 	}
 }

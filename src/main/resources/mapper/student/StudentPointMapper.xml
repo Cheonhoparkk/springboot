@@ -9,13 +9,37 @@
 		<where>
 			<if test='spName != null and spName!=""'>
 				AND SP_NAME like CONCAT('%',#{spName},'%')
+			</if >
+			<if test='spKorPoint1 !=0'>
+				AND SP_KOR_POINT &gt;= #{spKorPoint1}
+			</if>
+			<if test='spKorPoint2 !=0'>
+				AND SP_KOR_POINT &lt;= #{spKorPoint1}
+			</if>
+			<if test='spEngPoint1 !=0'>
+				AND SP_ENG_POINT &gt;= #{spKorPoint1}
+			</if>
+			<if test='spEngPoint2 !=0'>
+				AND SP_ENG_POINT &lt;= #{spEngPoint1}
+			</if>
+			<if test='spMathPoint1 !=0'>
+				AND SP_MATH_POINT &gt;= #{spKorPoint1}
+			</if>
+			<if test='spMathPoint2 !=0'>
+				AND SP_MATH_POINT &lt;= #{spEngPoint1}
+			</if>
+			<if test='spSumPoint1 !=0'>
+				AND (SP_KOR_POINT +SP_ENG_POINT+SP_MATH_POINT) &gt;= #{spSumPoint1}
+			</if>
+			<if test='spSumPoint2 !=0'>
+				AND (SP_KOR_POINT +SP_ENG_POINT+SP_MATH_POINT) &lt;= #{spSumPoint1}
 			</if>
 		</where>
 	</select>
 	<select id="selectStudentPoint" resultType="com.ezen.demo.vo.StudentPointVO">
 		SELECT SP_NUM, SP_KOR_POINT, SP_ENG_POINT, SP_MATH_POINT, SP_PROFILE 
 		FROM STUDENT_POINT
-		WHERE SP_NUM=#{spnum} 
+		WHERE SP_NUM=#{spNum} 
 	</select>
 	<insert id="insertStudentPoint" parameterType="com.ezen.demo.vo.StudentPointVO">
 		INSERT INTO STUDENT_POINT
@@ -29,9 +53,16 @@
 		SP_ENG_POINT=#{spEngPoint},
 		SP_MATH_POINT=#{spMathPoint},
 		SP_PROFILE=#{spProfile}
-		WHERE SP_NUM=#{spnum}
+		WHERE SP_NUM=#{spNum}
 	</update>
 	<delete id="deleteStudentPoint">
-		DELETE FROM STUDENT_POINT WHERE SP_NUM=#{spnum}
+		DELETE FROM STUDENT_POINT 
+		<where>
+			<if test='spNums != null and spNums.size !=0'>
+				<foreach collection="spNums" item="spNum" separator="," open="(" close=")">
+					#{spNum}
+				</foreach>
+			</if>
+		</where>
 	</delete>
 </mapper>

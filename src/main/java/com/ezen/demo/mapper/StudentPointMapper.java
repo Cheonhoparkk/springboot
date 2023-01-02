@@ -2,6 +2,8 @@ package com.ezen.demo.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ezen.demo.vo.StudentPointVO;
 
 public interface StudentPointMapper {
@@ -10,5 +12,5 @@ public interface StudentPointMapper {
 	StudentPointVO selectStudentPoint(int spNum);
 	int insertStudentPoint(StudentPointVO studentPoint);
 	int updateStudentPoint(StudentPointVO studentPoint);
-	int deleteStudentPoint(int spNum); 
+	int deleteStudentPoint(@Param("spNums") List<Integer> spNums);
 }
