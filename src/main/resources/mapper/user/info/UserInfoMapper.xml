@@ -3,8 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.demo.mapper.UserInfoMapper">
+<sql id="userInfoCols">
+	UI_NUM, UI_ID, UI_NAME, UI_PWD, 
+	UI_ZIP,UI_ADDR1,UI_ADDR2,UI_PROFILE,
+	UI_EMAIL,UI_PROFILE_IMG_PATH
+</sql>
   <select id="selectUserInfoList" resultType="com.ezen.demo.vo.UserInfoVO">
-    SELECT * FROM USER_INFO
+    SELECT
+    <include refid="userInfoCols"></include>
     <where>
     	<if test='uiName != null and uiName != ""'>
     		AND UI_NAME LIKE CONCAT('%',#{uiName},'%')
@@ -17,4 +23,22 @@
     	</if>
     </where>
   </select>
+  <select id="selectUserInfoById" resultType="com.ezen.demo.vo.UserInfoVO">
+  	SELECT
+  	<include refid="userInfoCols"></include>
+	FROM USER_INFO
+	WHERE UI_ID = #{uiId}
+  </select>
+  <insert id="insertUserInfo" parameterType="com.ezen.demo.vo.UserInfoVO">
+  	INSERT INTO USER_INFO
+	(UI_ID, UI_NAME, UI_PWD, UI_EMAIL, UI_ZIP, UI_ADDR1, UI_ADDR2, UI_PROFILE)
+	VALUES(#{uiId},#{uiName},#{uiPwd},#{uiEmail},#{uiZip},#{uiAddr1},#{uiAddr2},#{uiProfile})
+  </insert>
+  <update id="updateUserInfo" parameterType="com.ezen.demo.vo.UserInfoVO">
+  UPDATE USER_INFO
+	SET UI_NAME={#uiName},UI_ID={#uiId},UI_PWD={#uiPwd},
+	UI_EMAIL={#uiEmail},UI_ZIP={#uiZip},
+	UI_ADDR1={#uiAddr1},UI_ADDR2={#uiAddr2},UI_PROFILE={#uiProfile}
+	WHERE UI_NUM={#uiNum}
+  </update>
 </mapper>

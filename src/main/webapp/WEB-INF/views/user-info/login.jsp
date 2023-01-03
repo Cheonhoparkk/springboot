@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-안녕하세요
-<a href="/shop-infos">상품목록</a>
-<a href="/views/user-info/join">회원가입</a>
+
 </body>
 </html>
