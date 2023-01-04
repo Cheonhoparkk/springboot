@@ -4,6 +4,9 @@ package com.ezen.demo.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class SHA256 {
 	private static final String SALT = "dlwpszjavbxj!@34";
 	
@@ -21,6 +24,9 @@ public class SHA256 {
 			e.printStackTrace();
 		}
 		return "";
+	}
+	public static void main(String[] args) {
+		log.info("length=>{}", encode("test"));
 	}
 
 }

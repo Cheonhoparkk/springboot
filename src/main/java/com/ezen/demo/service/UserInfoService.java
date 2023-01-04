@@ -2,6 +2,8 @@ package com.ezen.demo.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,28 @@ public class UserInfoService {
 	}
 	
 	public UserInfoVO login(UserInfoVO userInfo) {
-		userInfo.setUiPwd(SHA256.encode(userInfo.get));
+		userInfo.setUiPwd(SHA256.encode(userInfo.getUiPwd()));
+		return userInfoMapper.selectUserInfoByIdAndPwd(userInfo);		
 	}
+	
+	public boolean checkPassword(UserInfoVO userInfo, int uiNum) {
+		UserInfoVO tmpUserInfo = userInfoMapper.selectUserInfo(uiNum);
+		if(tmpUserInfo!=null) {
+			String uiPwd = userInfo.getUiPwd();
+			String encodePwd = SHA256.encode(uiPwd);
+			if(encodePwd.equals(tmpUserInfo.getUiPwd())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean removeUserInfo(UserInfoVO userInfo, int uiNum) {
+		if(checkPassword(userInfo,uiNum)){
+			if(userInfoMapper.deleteUserInfo(uiNum)==1) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }
