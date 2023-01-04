@@ -2,8 +2,6 @@ package com.ezen.demo.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +11,7 @@ import com.ezen.demo.vo.UserInfoVO;
 
 @Service
 public class UserInfoService {
+	
 	@Autowired
 	private UserInfoMapper userInfoMapper;
 	
@@ -20,13 +19,12 @@ public class UserInfoService {
 		return userInfoMapper.selectUserInfoList(userInfo);
 	}
 	
-	public boolean existsUserId(String uiId) {
+	public boolean existUserId(String uiId) {
 		if(userInfoMapper.selectUserInfoById(uiId)==null) {
 			return false;
 		}
 		return true;
 	}
-	
 	public int insertUserInfo(UserInfoVO userInfo) {
 		String uiPwd = userInfo.getUiPwd();
 		String encodePwd = SHA256.encode(uiPwd);
@@ -36,9 +34,8 @@ public class UserInfoService {
 	
 	public UserInfoVO login(UserInfoVO userInfo) {
 		userInfo.setUiPwd(SHA256.encode(userInfo.getUiPwd()));
-		return userInfoMapper.selectUserInfoByIdAndPwd(userInfo);		
+		return userInfoMapper.selectUserInfoByIdAndPwd(userInfo);
 	}
-	
 	public boolean checkPassword(UserInfoVO userInfo, int uiNum) {
 		UserInfoVO tmpUserInfo = userInfoMapper.selectUserInfo(uiNum);
 		if(tmpUserInfo!=null) {
@@ -58,5 +55,4 @@ public class UserInfoService {
 		}
 		return false;
 	}
-	
 }

@@ -16,33 +16,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ezen.demo.service.UserInfoService;
 import com.ezen.demo.vo.UserInfoVO;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Controller
-@Slf4j
 public class UserInfoController {
-/*
- * Controller, RestController
- * Configuration
- * Service, Repository, Component
- * Bean
- */
+
 	@Autowired
 	private UserInfoService userInfoService;
 	
-	
 	@GetMapping("/user-infos")
-	public String getUserInfos(Model model,@ModelAttribute UserInfoVO userInfo){
-		model.addAttribute("userList", userInfoService.getUserInfos(userInfo));
+	public String getUserInfos(Model model, @ModelAttribute UserInfoVO userInfo) {
+		model.addAttribute("userList",userInfoService.getUserInfos(userInfo));
 		return "views/user-info/list";
 	}
 	
 	@GetMapping("/user-infos/check/{uiId}")
 	@ResponseBody
-	public boolean existUserId(@PathVariable("uiId") String uiId) {
-		return userInfoService.existsUserId(uiId);
+	public boolean existUserId(@PathVariable("uiId")String uiId) {
+		return userInfoService.existUserId(uiId);
 	}
-	
 	@PostMapping("/user-infos")
 	public @ResponseBody int addUserInfo(@RequestBody UserInfoVO userInfo) {
 		return userInfoService.insertUserInfo(userInfo);
@@ -56,6 +46,7 @@ public class UserInfoController {
 		public  @ResponseBody boolean removePassword(@RequestBody UserInfoVO userInfo, @PathVariable("uiNum") int uiNum) {
 			return userInfoService.removeUserInfo(userInfo, uiNum);
 	}
+	
 	@PostMapping("/login")
 	public @ResponseBody UserInfoVO login(@RequestBody UserInfoVO userInfo, HttpSession session) {
 		UserInfoVO loginUserInfo = userInfoService.login(userInfo);
@@ -65,4 +56,5 @@ public class UserInfoController {
 		}
 		return loginUserInfo;
 	}
+	
 }
