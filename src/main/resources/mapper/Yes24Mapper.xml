@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.ezen.demo.mapper.Yes24Mapper">
+  <select id="selectYes24List">
+  	SELECT
+  	YS_NUM, YS_IMG, YS_TITLE, YS_AUTER, YS_URL, YS_SUBTITLE, YS_PRICE, YS_PUBLISHING, YS_PUBLISHING_DATE
+  	FROM YES24
+  	ORDER BY YS_NUM
+  </select>
+  
+  <insert id="insertYes24">
+  	INSERT INTO YES24(YS_NUM, YS_IMG, YS_TITLE, YS_AUTER, YS_URL, YS_SUBTITLE, YS_PRICE, YS_PUBLISHING, YS_PUBLISHING_DATE)
+	VALUES
+	
+	<foreach collection="yes24List" item="yes24" separator=",">
+		(
+		#{yes24.ysNum}, #{yes24.ysImg}, #{yes24.ysTitle}, #{yes24.ysAuther}, #{yes24.ysUrl}, 
+		#{yes24.ysSubtitle}, #{yes24.ysPrice}, #{yes24.ysPublishing}, #{yes24.ysPublishingDate}
+		)
+	</foreach>
+	
+	
+  </insert>
+  </mapper>

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,33 +7,42 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="/board-infos">
-<input type="text" name="biNum" placeholder="번호">
-<input type="text" name="biTitle" placeholder="제목">
-<input type="text" name="biWriter" placeholder="글쓴이">
-<button>조회</button>
-</form>
+<h2>게시판</h2>
+<input type="text" id="biTitle"><button onclick="getBoardInfos()">검색</button>
 <table border="1">
 	<tr>
 		<th>번호</th>
 		<th>제목</th>
-		<th>내용</th>
-		<th>글쓴이</th>
 		<th>작성일</th>
-		<th>수정일</th>
 		<th>조회수</th>
 	</tr>
-<c:forEach items="${boardList}" var="board">
-	<tr>
-		<td>${board.biNum}</td>
-		<td>${board.biTitle}</td>
-		<td>${board.biContent}</td>
-		<td>${board.biWriter}</td>
-		<td>${board.credat}</td>
-		<td>${board.moddat}</td>
-		<td>${board.biCnt}</td>
-	</tr>
-</c:forEach>
+	<tbody id="tBody">
+	</tbody>
 </table>
+<button onclick="location.href='/views/board-info/insert'">등록</button>
+<script>
+function getBoardInfos(){
+	fetch('/board-infos?biTitle=' + document.querySelector('#biTitle').value)
+	.then(function(res){
+		return res.json();
+	})
+	.then(function(list){
+		let html = '';
+		for(let i=0;i<list.length;i++){
+			const boardInfo = list[i];
+			html += '<tr>';
+			html += '<td>' + boardInfo.biNum + '</td>';
+			html += '<td><a href="/views/board-info/view?biNum=' + boardInfo.biNum + '">' + boardInfo.biTitle + '</a></td>';
+			html += '<td>' + boardInfo.biCredat + '</td>';
+			html += '<td>' + boardInfo.biCnt + '</td>';
+			html += '</tr>';
+		}
+		document.querySelector('#tBody').innerHTML = html;
+	})
+};
+window.onload = function(){
+	getBoardInfos()
+}
+</script>
 </body>
 </html>

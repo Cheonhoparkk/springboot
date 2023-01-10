@@ -8,15 +8,13 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
-<input type="text" id="uiId" value="${userInfo.uiId}"><button onclick="checkId()">중복확인</button><br>
-<input type="text" id="uiName"><br>
-<input type="password" id="uiPwd"><br>
-<input type="password" id="uiPwdCheck"><br>
-<input type="email" id="uiEmail"><br>
-<input type="text" id="uiZip" disabled><button onclick="searchAddr()">주소검색</button><br>
-<input type="text" id="uiAddr1" disabled><br>
-<input type="text" id="uiAddr2"><br>
-<input type="text" id="uiProfile"><br>
+<input type="text" id="uiId" value="${userInfo.uiId}" disabled><br>
+<input type="text" id="uiName"  value="${userInfo.uiName}"><br>
+<input type="email" id="uiEmail"  value="${userInfo.uiEmail}"><br>
+<input type="text" id="uiZip" disabled  value="${userInfo.uiZip}"><button onclick="searchAddr()">주소검색</button><br>
+<input type="text" id="uiAddr1" disabled  value="${userInfo.uiAddr1}"><br>
+<input type="text" id="uiAddr2"  value="${userInfo.uiAddr2}"><br>
+<input type="text" id="uiProfile"  value="${userInfo.uiProfile}"><br>
 
 <button onclick="join()">회원수정</button>
 <script>
@@ -38,8 +36,8 @@ function join(){
 			uiProfile : document.querySelector('#uiProfile').value,
 			uiEmail : document.querySelector('#uiEmail').value
 	}
-	fetch('/user-infos',{
-		method : 'POST',
+	fetch('/user-infos/${userInfo.uiNum}',{
+		method : 'PATCH',
 		headers : {
 			'Content-Type' : 'application/json'
 		},
@@ -49,7 +47,14 @@ function join(){
 		return res.json()
 	})
 	.then(function(data){
-		console.log(data);
+		if(data===true){
+			alert('수정이 성공하였습니다.')
+			location.href='/views/user-info/view';
+		}
+	})
+	.catch(function(err){
+		alert('오류가 발생하였습니다.')
+		location.replace();
 	})
 }
 </script>
