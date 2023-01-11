@@ -1,25 +1,26 @@
 package com.ezen.demo.api;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-import com.ezen.demo.vo.PapagoParamVO;
-import com.ezen.demo.vo.PapagoVO;
+import com.ezen.demo.vo.BoxOfficeResponseVO;
+import com.ezen.demo.vo.BoxOfficeVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,40 +32,41 @@ import lombok.extern.slf4j.Slf4j;
 @PropertySource("classpath:env.properties")
 public class ApiBoxOffice {
 	@Value("${movie.url}")
-	private String movieUrl = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=d47e89b4d3b67a3e967b66d9c408c6bc&targetDt=";
+	private String movieUrl = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=5ace18a434b1614abd7df1f4a58c67aa&targetDt=";
 	@Autowired
 	private ObjectMapper om;
-private int cnt = 1;
+	private int cnt =1;
 
-public static void main(String[] args) throws JsonMappingException, JsonProcessingException {
-	Date date = new Date();
-	SimpleDateFormat sdf = new Si
-}
-	public PapagoVO translate(PapagoParamVO papagoParam) throws JsonMappingException, JsonProcessingException {
+	public List<BoxOfficeVO> getBoxOfficeList()  {
+		Instant now = Instant.now();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String movieUrl = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=5ace18a434b1614abd7df1f4a58c67aa&targetDt=";
+		List<BoxOfficeVO> allBoxOfficeList = new ArrayList<>();
 		
-//		String json = get();
-//        Map<String, Object> requestHeaders = new HashMap<>();
-//        requestHeaders.put("X-Naver-Client-Id", clientId);
-//        requestHeaders.put("X-Naver-Client-Secret", clientSecret);
-//        String json = post(requestHeaders, papagoParam);
-//        return om.readValue(json, PapagoVO.class);
+		for(int i=1;i<=30;i++) {
+			Instant before = now.minus(Duration.ofDays(i));
+			Date date = Date.from(before);
+			String dateStr = sdf.format(date);
+			String json = get(movieUrl+dateStr);
+			try {
+			BoxOfficeResponseVO result = om.readValue(json, BoxOfficeResponseVO.class);
+			List<BoxOfficeVO> dailyBoxOfficeList = result.getBoxOfficeResult().getDailyBoxOfficeList();
+			for(BoxOfficeVO boxOffice : dailyBoxOfficeList) {
+				boxOffice.setTargetDt(dateStr);
+			}
+			allBoxOfficeList.addAll(dailyBoxOfficeList);
+		}catch(Exception e){
+			log.error("parse error=>{}",e);
+			}
+		}
+		return allBoxOfficeList;
 	}
 
-    private String post(Map<String, String> requestHeaders, PapagoParamVO papagoParam){
-        HttpURLConnection con = connect();
-        String postParams = "source=" + papagoParam.getSource() +"&target=" + papagoParam.getTarget() + "&text=" + papagoParam.getText(); //원본언어: 한국어 (ko) -> 목적언어: 영어 (en)
+    private String get(String url){
+        HttpURLConnection con = connect(url);
+        
         try {
-            con.setRequestMethod(method);
-            for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
-                con.setRequestProperty(header.getKey(), header.getValue());
-            }
-
-            con.setDoOutput(true);
-            try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
-                wr.write(postParams.getBytes());
-                wr.flush();
-            }
-
+            con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 응답
                 return readBody(con.getInputStream());
@@ -78,14 +80,14 @@ public static void main(String[] args) throws JsonMappingException, JsonProcessi
         }
     }
 
-    private HttpURLConnection connect(){
+    private HttpURLConnection connect(String apiUrl){
         try {
             URL url = new URL(apiUrl);
             return (HttpURLConnection)url.openConnection();
         } catch (MalformedURLException e) {
-            throw new RuntimeException("API URL이 잘못되었습니다. : " + apiUrl, e);
+            throw new RuntimeException("API URL이 잘못되었습니다. : " + movieUrl, e);
         } catch (IOException e) {
-            throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
+            throw new RuntimeException("연결이 실패했습니다. : " + movieUrl, e);
         }
     }
 
