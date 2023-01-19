@@ -17,11 +17,12 @@ public class ApiScheduler {
 
 	@Autowired
 	private BoxOfficeService boxOfficeService;
-	//cron = " 초 분 시 일 월 주"
-	@Scheduled(cron="0 10 13 * * *")
-	public void dailyBoxOffice() {
-		List<BoxOfficeVO> boxOfficeList = boxOfficeService.getBoxOffices(1);
-		int result = boxOfficeService.insertBoxOffice(boxOfficeList);
-		log.debug("result=>{}", result);
+	
+	// cron ="초 분 시 일 월 주"
+//	@Scheduled(cron="0 10 13 * * *")
+//	public void dailyBoxOffice() {
+//		List<BoxOfficeVO> boxOfficeList = boxOfficeService.getBoxOffices(1);
+//		int result = boxOfficeService.insertBoxOffice(boxOfficeList);
+//		log.debug("result=>{}", result);
 	}
-}
+//}

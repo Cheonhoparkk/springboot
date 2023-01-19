@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.demo.mapper.FestivalInformationMapper">
+<sql id="FestivalInformationCols">
+	ADDR1, ADDR2, BOOKTOUR, CAT1, CAT2, CAT3, CONTENTID, CONTENTTYPEID, CREATETIME,
+	EVENTSTARTDATE, EVENTENDDATE, FIRSTIMAGE, FIRSTIMAGE2, MAPX, MAPY, MLEVEL,
+	MODIFIEDTIME, READCOUNT, AREACODE, SIGUNGUCODE, TEL, TITLE
+
+</sql>
+<select id="selectFestivalInformation" resultType="com.ezen.demo.vo.festival.FestivalInformationVO">
+	SELECT
+	<include refid="FestivalInformationCols"/>
+	FROM FESTIVAL_INFORMATION
+	ORDER BY FI_NUM
+</select>
+
+<insert id="insertFestivalInformations">
+	INSERT INTO FESTIVAL_INFORMATION
+	(
+	ADDR1, ADDR2, BOOKTOUR, CAT1, CAT2, CAT3, CONTENTID, CONTENTTYPEID, CREATETIME,
+	EVENTSTARTDATE, EVENTENDDATE, FIRSTIMAGE, FIRSTIMAGE2, MAPX, MAPY, MLEVEL,
+	MODIFIEDTIME, READCOUNT, AREACODE, SIGUNGUCODE, TEL, TITLE
+	)
+	VALUES
+	<foreach collection="festivalInformationList" item="festivalInformation" separator=",">
+	(
+	#{festivalInformation.addr1},#{festivalInformation.addr2},#{festivalInformation.booktour},#{festivalInformation.cat1},
+	#{festivalInformation.cat2},#{festivalInformation.cat3},#{festivalInformation.contentid},#{festivalInformation.contenttypeid},
+	#{festivalInformation.createtime},#{festivalInformation.eventstartdate},#{festivalInformation.eventenddate},
+	#{festivalInformation.firstimage},#{festivalInformation.firstimage2},#{festivalInformation.mapx},#{festivalInformation.mapy},
+	#{festivalInformation.mlevel},#{festivalInformation.modifiedtime},#{festivalInformation.readcount},#{festivalInformation.areacode},
+	#{festivalInformation.sigungucode},#{festivalInformation.tel},#{festivalInformation.title}
+	)
+	</foreach>
+</insert>
+</mapper>

@@ -12,17 +12,17 @@ import com.ezen.demo.vo.BoxOfficeVO;
 @Service
 public class BoxOfficeService {
 
+
 	@Autowired
 	private ApiBoxOffice apiBoxOffice;
 	@Autowired
-	private BoxOfficeMapper boxOfficemapper;
+	private BoxOfficeMapper boxOfficeMapper;
 	
-//	public int insertBoxOffice(List<BoxOfficeVO> boxOfficeList) {
-//	
-//		return boxOfficeMapper.insertBoxOffices(boxOfficeList);
-//	}
-//	
-//	public List<BoxOfficeVO> getBoxOffices(int cnt){
-//		return apiBoxOffice.getBoxOfficeList(cnt);
-//	}
+	public int insertBoxOffice(List<BoxOfficeVO> boxOfficeList) {
+		return boxOfficeMapper.insertBoxOffices(boxOfficeList);
+	}
+	
+	public List<BoxOfficeVO> getBoxOffices(int cnt){
+		return apiBoxOffice.getBoxOfficeList(cnt);
+	}
 }

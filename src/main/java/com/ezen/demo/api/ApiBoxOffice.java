@@ -37,29 +37,30 @@ public class ApiBoxOffice {
 	private ObjectMapper om;
 	private int cnt =1;
 
-	public List<BoxOfficeVO> getBoxOfficeList()  {
+	public List<BoxOfficeVO> getBoxOfficeList(int max){
 		Instant now = Instant.now();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String movieUrl = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=5ace18a434b1614abd7df1f4a58c67aa&targetDt=";
 		List<BoxOfficeVO> allBoxOfficeList = new ArrayList<>();
 		
-		for(int i=1;i<=30;i++) {
+		for(int i=1;i<=max;i++) {
 			Instant before = now.minus(Duration.ofDays(i));
 			Date date = Date.from(before);
 			String dateStr = sdf.format(date);
 			String json = get(movieUrl+dateStr);
 			try {
-			BoxOfficeResponseVO result = om.readValue(json, BoxOfficeResponseVO.class);
-			List<BoxOfficeVO> dailyBoxOfficeList = result.getBoxOfficeResult().getDailyBoxOfficeList();
-			for(BoxOfficeVO boxOffice : dailyBoxOfficeList) {
-				boxOffice.setTargetDt(dateStr);
-			}
-			allBoxOfficeList.addAll(dailyBoxOfficeList);
-		}catch(Exception e){
-			log.error("parse error=>{}",e);
+				BoxOfficeResponseVO result = om.readValue(json, BoxOfficeResponseVO.class);
+				List<BoxOfficeVO> dailyBoxOfficeList = result.getBoxOfficeResult().getDailyBoxOfficeList();
+				for(BoxOfficeVO boxOffice : dailyBoxOfficeList) {
+					boxOffice.setTargetDt(dateStr);
+				}
+				allBoxOfficeList.addAll(dailyBoxOfficeList);
+			}catch(Exception e) {
+				log.error("parse error=>{}", e);
 			}
 		}
 		return allBoxOfficeList;
+
 	}
 
     private String get(String url){

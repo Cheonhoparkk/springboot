@@ -17,14 +17,14 @@ public class BoardInfoService{
 	public List<BoardInfoVO> getBoardInfos(BoardInfoVO boardInfo){
 		return boardInfoMapper.selectBoardInfoList(boardInfo);
 	}
-	public int insertBoardInfo(BoardInfoVO boardInfo) {
-		return boardInfoMapper.insertBoardInfo(boardInfo);
-	}
 	
 	public BoardInfoVO getBoardInfo(int biNum) {
 		return boardInfoMapper.selectBoardInfo(biNum);
 	}
-
+	public int insertBoardInfo(BoardInfoVO boardInfo) {
+		return boardInfoMapper.insertBoardInfo(boardInfo);
+	}
+	
 	public int updateBoardInfoActive(int biNum) {
 		return boardInfoMapper.updateBoardInfoActive(biNum);
 	}
