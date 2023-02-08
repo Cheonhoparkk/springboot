@@ -7,6 +7,7 @@ public class BoardInfoVO {
 
 	private int biNum;
 	private String biTitle;
+	private String biWriter;
 	private String biContent;
 	private String biCredat;
 	private String biCretim;

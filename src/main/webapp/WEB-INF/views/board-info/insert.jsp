@@ -13,6 +13,10 @@
 		<td><input type="text" id="biTitle"></td>
 	</tr>
 	<tr>
+		<th>작성자</th>
+		<td>${userInfo.uiName}</td>
+	</tr>
+	<tr>
 		<th>내용</th>
 		<td><textarea rows="10" cols="40" id="biContent"></textarea></td>
 	</tr>

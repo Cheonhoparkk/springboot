@@ -35,12 +35,10 @@ function getBoard(){
 	.then(function(boardInfo){
 		let html = '';
 		html += '번호 : ' + boardInfo.biNum + '<br>';
+		html += '작성자 : ' + boardInfo.biWriter + '<br>';
 		html += '제목 : ' + boardInfo.biTitle + '<br>';
 		html += '내용 : ' + boardInfo.biContent + '<br>';
 		document.querySelector('#rDiv').innerHTML = html;
-		if(boardInfo.uiNum == '${userInfo.uiNum}'){
-			document.querySelector('#btnDiv').style.display = '';
-		}
 	});
 }
 window.onload = function(){
