@@ -20,7 +20,7 @@ public class CodeLoadConfig {
 	
 	@Bean
 	List<Sido1VO> sidoList(){
-		return addressMapper.selectSidoListList(null);
+		return addressMapper.selectSidoList(null);
 	}
 	
 	@Bean

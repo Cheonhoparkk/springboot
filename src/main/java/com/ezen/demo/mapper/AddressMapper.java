@@ -8,7 +8,7 @@ import com.ezen.demo.vo.Sido1VO;
 
 public interface AddressMapper {
 
-	List<Sido1VO> selectSidoListList(Sido1VO sido);
+	List<Sido1VO> selectSidoList(Sido1VO sido);
 	List<Gugun1VO> selectGugunList(Gugun1VO gugun);
 	List<Dong1VO> selectDongList(Dong1VO dong);
 }
